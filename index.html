@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Email Verification</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22currentColor%22><path d=%22M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z%22/></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%2300aaff%22><path d=%22M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-8 6.5L4 6h16l-8 4.5zM4 18V8l8 5 8-5v10H4z%22/></svg>">
     <style>
         :root {
             --primary-color: #00aaff;
@@ -392,14 +392,74 @@
             max-width: 700px;
         }
 
+        /* --- Pricing Section --- */
         .pricing-section { /* Uses .section base */ }
-        .pricing-content {
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        .pricing-item { 
             text-align: center;
         }
-        .pricing-content .glass-card {
-            max-width: 600px;
-            margin: 0 auto 30px auto;
+        .pricing-item .glass-card { /* To ensure pricing items also get hover effects if desired */
+             width: 100%; /* Make cards take full width of grid cell */
         }
+        .pricing-icon-wrapper {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            background-image: linear-gradient(135deg, var(--primary-color), var(--secondary-accent-color));
+            color: var(--heading-color); 
+            font-size: 2rem; 
+            margin-bottom: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            line-height: 1;
+        }
+        .pricing-item h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: var(--heading-color); 
+            font-weight: 600;
+        }
+         .pricing-item p {
+            font-size: 0.9rem;
+            color: var(--text-color);
+        }
+
+        .pricing-cta-section {
+            text-align: center;
+            margin-top: 30px; /* Reduced from 40px */
+        }
+        .pricing-cta-section .cta-button {
+            margin-bottom: 25px;
+            background-image: linear-gradient(to right, var(--secondary-accent-color), var(--primary-color)); /* Different gradient for this CTA */
+        }
+        .pricing-cta-section .cta-button:hover {
+            box-shadow: 0 10px 30px rgba(74, 222, 128, 0.55); /* Greenish shadow on hover */
+        }
+        .contact-sales-text {
+            font-size: 1rem;
+            color: var(--muted-text-color);
+            line-height: 1.6;
+        }
+        .contact-sales-link {
+            color: var(--secondary-accent-color);
+            font-weight: 600;
+            text-decoration: none;
+            transition: color var(--transition-speed) ease, text-decoration var(--transition-speed) ease;
+        }
+        .contact-sales-link:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+        /* --- End Pricing Section --- */
+
 
         footer {
             background-color: rgba(10, 10, 25, 0.9);
@@ -434,7 +494,7 @@
             .section-subtitle { font-size: 1rem; margin-bottom: 40px; }
             .iframe-container { height: 500px; }
             .hero-content-box { padding: 40px 30px; }
-            .features-grid, .use-cases-grid { grid-template-columns: 1fr; }
+            .features-grid, .use-cases-grid, .pricing-grid { grid-template-columns: 1fr; } /* Ensure pricing grid is also 1 column on mobile */
             nav a { font-size: 0.85rem; margin-left: 12px;}
             nav a.nav-button, nav a.nav-button-outline { padding: 7px 12px; font-size: 0.8rem;}
         }
@@ -450,7 +510,9 @@
             nav { flex-direction: column; }
             nav a { margin: 8px 0; width: 100%; text-align: center;}
             nav a.nav-button, nav a.nav-button-outline { width: auto; margin-left: 0;}
-            .feature-item, .use-case-item, .glass-card { padding: 25px 20px; }
+            .feature-item, .use-case-item, .glass-card, .pricing-item .glass-card { padding: 25px 20px; } /* Apply to pricing items too */
+            .pricing-item h3 { font-size: 1.2rem; }
+            .pricing-icon-wrapper { width: 55px; height: 55px; font-size: 1.8rem; }
         }
     </style>
 </head>
@@ -461,18 +523,20 @@
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6zm-2 0l-8 5-8-5h16zm0 12H4V8l8 5 8-5v10z"/>
                 </svg>
-                AI Email Verification - Dataoorts
+                AI-CRM
             </div>
             <nav>
+                <a href="/demo" target="_blank">Demo</a>
                 <a href="https://dataoorts.document360.io/docs/get-started-1" target="_blank">Features</a>
-                <a href="#try-now" class="try-now-link">Try Now</a>
                 <a href="https://dataoorts.document360.io/docs/use-cases" target="_blank">Use Cases</a>
-                <a href="#pricing">Pricing</a>
-                <a href="#api-batch">API</a>
-                 <a href="#api-batch">Batch</a>
-                <a href="#docs">Docs</a>
-                <a href="#register" class="nav-button-outline">Register</a>
-                <a href="#login" class="nav-button">Login</a>
+                <a href="/pricing" target="_blank">Pricing</a>
+                 <a href="/batch" target="_blank">Bulk</a>
+                <a href="https://dataoorts.document360.io/docs/ai-emails-verification" target="_blank">Docs</a>
+                <a href="https://dataoorts.document360.io/docs/api-email-verification" target="_blank">API</a>
+                <a href="https://dataoorts.document360.io/docs/faqs" target="_blank">FAQs</a>
+                <a href="https://tally.so/r/nrkBjL" target="_blank">Contact</a>
+                <a href="https://cloud.dataoorts.com/register" class="nav-button-outline" target="_blank">Register</a>
+                <a href="https://cloud.dataoorts.com/aicrm_mails" class="nav-button" target="_blank">Login</a>
             </nav>
         </div>
     </header>
@@ -486,7 +550,7 @@
                         Clean your lists, reduce bounces, and enrich your data by predicting names from emails.
                         Boost deliverability for your sign-up forms and campaigns.
                     </p>
-                    <a href="#try-now" class="cta-button">Get Started - Free Trial!</a>
+                    <a href="/demo" class="cta-button" target="_blank">Get Started - Free Trial!</a>
                 </div>
             </div>
         </section>
@@ -511,7 +575,7 @@
                                 <path d="M12 6c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2m0 10c2.7 0 5.8 1.29 6 2H6c.23-.72 3.31-2 6-2m0-12C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 10c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
                              </svg>
                         </div>
-                        <h3>Name Prediction AI</h3>
+                        <h3>Name Prediction</h3>
                         <p>Our AI model intelligently predicts the name of the email holder, enriching your contact data.</p>
                     </div>
                     <div class="feature-item glass-card">
@@ -536,8 +600,8 @@
 
         <section id="try-now" class="section embed-section">
             <div class="container">
-                <h2 class="section-title">Try Our Free AI Email Tool</h2>
-                <p class="section-subtitle">Enter an email address below to check its validity and see our AI predict associated data in real-time.</p>
+                <h2 class="section-title">Try Our Demo Verification</h2>
+                <p class="section-subtitle">Enter an email address below to check its validity and see our model predict associated data in real-time.</p>
                 <div class="iframe-container-wrapper">
                     <div class="iframe-container">
                         <iframe
@@ -549,7 +613,7 @@
                     </div>
                 </div>
                 <p class="embed-note">
-                    This interactive demo is generously hosted on Hugging Face Spaces. <br>
+                    Interactive Demo <br>
                     Experience the future of email intelligence.
                 </p>
             </div>
@@ -595,15 +659,15 @@
         <section id="api-batch" class="section api-batch-section section-patterned-overlay">
             <div class="container">
                 <h2 class="section-title">Integrate & Scale with Ease</h2>
-                <p class="section-subtitle">Process emails individually, in bulk, or integrate our powerful AI into your own applications.</p>
+                <p class="section-subtitle">Async Process emails individually, in bulk, or integrate our powerful AI into your own applications with our API.</p>
                 <div class="api-batch-content">
                     <div class="glass-card">
-                        <h3>Powerful API Access</h3>
-                        <p>Seamlessly integrate our email verification and data prediction capabilities into your websites, CRMs, or custom applications with our well-documented REST API.</p>
-                        <a href="#docs" class="cta-button" style="margin-top: 20px; padding: 12px 25px; font-size: 1rem;">View API Docs</a>
+                        <h3>Powerful Async API Access</h3>
+                        <p>Seamlessly integrate our email verification and data prediction capabilities into your websites, CRMs, or custom applications with our well-documented Async REST API.</p>
+                        <a href="https://dataoorts.document360.io/docs/api-email-verification" class="cta-button" style="margin-top: 20px; padding: 12px 25px; font-size: 1rem;" target="_blank">View API Docs</a>
                     </div>
                     <div class="glass-card">
-                        <h3>Effortless Batch Processing</h3>
+                        <h3>Effortless Batch/Bulk Processing</h3>
                         <p>Clean and enrich entire email lists quickly. Upload your file, and let our system handle the verification and name prediction for thousands of emails asynchronously.</p>
                          <a href="#register" class="cta-button" style="margin-top: 20px; padding: 12px 25px; font-size: 1rem; background-image: linear-gradient(to right, var(--secondary-accent-color), var(--primary-color));">Upload Batch File</a>
                     </div>
@@ -613,15 +677,33 @@
 
         <section id="pricing" class="section pricing-section">
             <div class="container">
-                <h2 class="section-title">Affordable & Transparent Pricing</h2>
-                <p class="section-subtitle">Choose a plan that fits your needs. Get exceptional value with our powerful features and accurate results. We believe in providing the most affordable options.</p>
-                <div class="pricing-content">
-                    <div class="glass-card">
-                        <h3>Simple Plans, Powerful Features</h3>
-                        <p>Our pricing is designed to be straightforward and scalable. Whether you're a startup or an enterprise, find the perfect fit. All plans include access to both verification and name prediction.</p>
-                        <a href="#contact" class="cta-button" style="margin-top: 20px;">View Pricing Plans</a>
-                         <p style="margin-top:15px; font-size:0.9em;">(Example: Link to a full pricing page or contact form)</p>
+                <h2 class="section-title">Most Affordable, Flexible, & Transparent Pricing</h2>
+                <p class="section-subtitle">Experience ultimate flexibility. Pay only for what you use with credits that never expire. No subscriptions, no commitments – just powerful email intelligence on your terms.</p>
+                
+                <div class="pricing-grid">
+                    <div class="pricing-item glass-card">
+                        <div class="pricing-icon-wrapper">💸</div>
+                        <h3>Pay As You Go</h3>
+                        <p>Only pay for the verifications and predictions you actually use. Maximum cost-efficiency and control over your spending.</p>
                     </div>
+                    <div class="pricing-item glass-card">
+                        <div class="pricing-icon-wrapper">🗓️</div>
+                        <h3>No Subscriptions, No Commitments</h3>
+                        <p>Enjoy full access to our powerful AI tools without being tied down. Use our services as and when your business needs them.</p>
+                    </div>
+                    <div class="pricing-item glass-card">
+                        <div class="pricing-icon-wrapper">⏳♾️</div>
+                        <h3>Credits Never Expire</h3>
+                        <p>Your purchased credits remain valid indefinitely. Verify and enrich your email data at your own pace, without rush.</p>
+                    </div>
+                </div>
+
+                <div class="pricing-cta-section">
+                    <a href="/pricing" class="cta-button" target="_blank">Estimate Your Cost</a>
+                    <p class="contact-sales-text">
+                        Need a high-volume plan or have specific requirements? <br class="d-md-none">
+                        <a href="https://tally.so/r/nrkBjL" target="_blank" class="contact-sales-link">Contact Sales</a>
+                    </p>
                 </div>
             </div>
         </section>
@@ -630,8 +712,8 @@
 
     <footer>
         <div class="container">
-            <p>© 2023-2025 AI Email Intel. All Rights Reserved. <br> Modern UI for awesome experiences. Free trial tool embedded from Hugging Face Spaces.</p>
-            <p class="footer-attribution">Powered by Dataoorts - AICRM</p>
+            <p>© 2025 AI Email Verification. All Rights Reserved. <br>Made with 💖 in India</p>
+            <p class="footer-attribution">Powered by Dataoorts - AICRM Project</p>
         </div>
     </footer>
 
