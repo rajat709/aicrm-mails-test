@@ -75,8 +75,7 @@ We believe in providing value without locking you in.
 
 ---
 
-## ©️ Copyright
+## Project Support
 
-© 2025 AI Email Verification (AI-CRM). All Rights Reserved.
 Made with 💖 in India.
 Powered by Dataoorts - AICRM Project.
