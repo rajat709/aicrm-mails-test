@@ -72,7 +72,7 @@
             color: var(--text-color);
             line-height: 1.7;
             font-size: 16px;
-            overflow-x: hidden;
+            overflow-x: hidden; /* Important: this prevents horizontal scrollbars caused by the shifted elements */
         }
 
         ::-webkit-scrollbar {
@@ -491,6 +491,37 @@
             font-weight: 500;
             color: var(--text-color);
         }
+
+
+        /* --- API Batch Section Specific Card Positioning --- */
+        .api-batch-section .api-batch-content .glass-card:nth-child(1) {
+            /* This targets the "Powerful Async API Access" card */
+            transform: translateX(-80px);
+        }
+
+        .api-batch-section .api-batch-content .glass-card:nth-child(2) {
+            /* This targets the "Effortless Batch/Bulk Processing" card */
+            transform: translateX(80px);
+        }
+
+        /* Responsive adjustment for API Batch cards */
+        @media (max-width: 992px) { 
+            .api-batch-section .api-batch-content .glass-card:nth-child(1) {
+                transform: translateX(-40px);
+            }
+            .api-batch-section .api-batch-content .glass-card:nth-child(2) {
+                transform: translateX(40px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .api-batch-section .api-batch-content .glass-card:nth-child(1),
+            .api-batch-section .api-batch-content .glass-card:nth-child(2) {
+                transform: translateX(0); /* Reset shift on smaller screens */
+            }
+        }
+        /* --- End API Batch Section Specific Card Positioning --- */
+
 
         @media (max-width: 1024px) {
             nav { flex-wrap: wrap; justify-content: center; }
