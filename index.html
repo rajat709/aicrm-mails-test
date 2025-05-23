@@ -13,7 +13,7 @@
             --accent-color: #ff3d71;
             --secondary-accent-color: #4ade80; /* Green for success/prediction */
 
-            --base-background-image: url('https://images.unsplash.com/photo-1530053969600-ac8408db1686?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            /* --base-background-image: url('https://images.unsplash.com/photo-1530053969600-ac8408db1686?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'); */ /* Commented out or remove this line */
             
             --body-bg-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cg fill='%232a2f57' fill-opacity='0.04'%3E%3Ccircle cx='2' cy='2' r='1'/%3E%3Ccircle cx='7' cy='7' r='1'/%3E%3C/g%3E%3C/svg%3E");
 
@@ -64,17 +64,31 @@
 
         body {
             font-family: var(--font-family);
-            background-color: rgba(15, 15, 35, 0.8); 
-            background-image: var(--body-bg-pattern), var(--base-background-image);
-            background-attachment: fixed, fixed; 
-            background-size: auto, cover;
-            background-position: center, center;
-            background-blend-mode: normal, soft-light; 
+            background-color: rgba(15, 15, 35, 0.8); /* This provides a tint over the video */
+            background-image: var(--body-bg-pattern); /* Keeps the subtle pattern over the video */
+            background-attachment: fixed; 
+            background-size: auto; /* Adjusted for single pattern */
+            background-position: center;
+            background-blend-mode: normal; /* Or 'multiply' if you prefer for the pattern */
             color: var(--text-color);
             line-height: 1.7;
             font-size: 16px;
             overflow-x: hidden;
+            position: relative; /* Important for z-index context of absolute/fixed children if any */
         }
+
+        #background-video {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -100; /* Places it behind all other content */
+            object-fit: cover; /* Ensures the video covers the screen without distortion */
+        }
+
 
         ::-webkit-scrollbar {
             width: 8px;
@@ -517,6 +531,11 @@
     </style>
 </head>
 <body>
+    <video autoplay muted loop playsinline id="background-video">
+        <source src="theme_main.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
     <header>
         <div class="container">
             <div class="logo">
