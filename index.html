@@ -12,6 +12,8 @@
             --primary-hover-color: #0088cc;
             --accent-color: #ff3d71;
             --secondary-accent-color: #4ade80; /* Green for success/prediction */
+
+            /* Removed --base-background-image from here, body will handle its own general background */
             
             --body-bg-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cg fill='%232a2f57' fill-opacity='0.04'%3E%3Ccircle cx='2' cy='2' r='1'/%3E%3Ccircle cx='7' cy='7' r='1'/%3E%3C/g%3E%3C/svg%3E");
 
@@ -21,10 +23,10 @@
             --heading-color: #ffffff;
             --muted-text-color: #a0a0c0;
 
-            --glass-bg: rgba(40, 45, 80, 0.65); 
+            --glass-bg: rgba(40, 45, 80, 0.65); /* Semi-transparent for header */
             --glass-border-color: rgba(255, 255, 255, 0.12);
             --glass-shadow-color: rgba(0, 0, 0, 0.4);
-            --blur-intensity: 12px; /* Still used for header and other glass cards */
+            --blur-intensity: 12px;
             --card-border-radius: 18px;
 
             --font-family: 'Poppins', sans-serif;
@@ -50,7 +52,7 @@
         html {
             scroll-behavior: smooth;
             background-color: #0a0a18; 
-            background-image: var(--glow-gradient); 
+            background-image: var(--glow-gradient); /* Page-wide glow */
             background-size: 300% 300%; 
             animation: glowingRootBackground 22s ease-in-out infinite alternate;
         }
@@ -62,8 +64,8 @@
 
         body {
             font-family: var(--font-family);
-            background-color: rgba(15, 15, 35, 0.9); 
-            background-image: var(--body-bg-pattern); 
+            background-color: rgba(15, 15, 35, 0.9); /* Darker base for areas without video */
+            background-image: var(--body-bg-pattern); /* Subtle pattern for the whole body */
             background-attachment: fixed; 
             background-size: auto;
             background-position: center;
@@ -95,13 +97,13 @@
         }
 
         header {
-            background: var(--glass-bg); 
+            background: var(--glass-bg); /* Uses semi-transparent glass effect */
             backdrop-filter: blur(var(--blur-intensity));
             -webkit-backdrop-filter: blur(var(--blur-intensity));
             padding: 1rem 0;
             position: sticky;
             top: 0;
-            z-index: 1000; 
+            z-index: 1000; /* Ensures header is above hero video and other content */
             box-shadow: 0 5px 25px var(--glass-shadow-color);
             border-bottom: 1px solid var(--glass-border-color);
         }
@@ -186,10 +188,11 @@
         }
         
         .hero {
-            padding: 100px 0 120px 0; 
+            padding: 100px 0 120px 0; /* This padding defines the video background area height */
             text-align: center;
-            position: relative; 
-            overflow: hidden; 
+            position: relative; /* Crucial for containing the absolute video */
+            overflow: hidden; /* Clips the video to the hero section bounds */
+            /* No background color here, so video can show */
         }
 
         #hero-background-video {
@@ -197,46 +200,43 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%; 
-            object-fit: cover; 
-            z-index: -1; 
-            /* No opacity or filter directly on the video ensures it's clear */
+            height: 100%; /* Fills the entire hero section */
+            object-fit: cover; /* Covers the area, crops if aspect ratio mismatches */
+            z-index: -1; /* Sits behind the hero content */
         }
 
         .hero-content-box {
-            /* background: rgba(25, 30, 65, 0.75); -- REMOVED for clear video */
-            /* backdrop-filter: blur(calc(var(--blur-intensity) * 0.7)); -- REMOVED */
-            /* -webkit-backdrop-filter: blur(calc(var(--blur-intensity) * 0.7)); -- REMOVED */
+            background: rgba(25, 30, 65, 0.75); /* Overlay for text readability over video */
+            backdrop-filter: blur(calc(var(--blur-intensity) * 0.7));
+            -webkit-backdrop-filter: blur(calc(var(--blur-intensity) * 0.7));
             padding: 50px 40px;
-            /* border: 1px solid rgba(255, 255, 255, 0.05); -- Optional: very subtle border */
-            border-radius: var(--card-border-radius); /* Optional: may remove if no bg/border */
-            /* box-shadow: 0 5px 20px rgba(0,0,0,0.2); -- Optional: subtle shadow for depth */
+            border-radius: var(--card-border-radius);
+            box-shadow: 0 10px 35px rgba(0,0,0,0.4);
+            border: 1px solid var(--glass-border-color);
             max-width: 850px;
             margin: 0 auto;
-            position: relative; 
-            z-index: 1; 
+            position: relative; /* Ensures it's above the video (due to z-index or natural flow) */
+            z-index: 1; /* Explicitly above the video's z-index: -1 */
         }
         .hero h1 {
             font-size: 3rem;
             margin-bottom: 20px;
             font-weight: 700;
             line-height: 1.25;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.3);
             color: var(--heading-color);
-            text-shadow: 0 3px 8px rgba(0,0,0,0.8); /* Enhanced shadow for readability */
         }
         .hero h1 .highlight {
             color: var(--secondary-accent-color);
-            /* text-shadow: 0 3px 8px rgba(0,0,0,0.6); /* Ensure highlight also has shadow if needed */
         }
         .hero .subtitle {
             font-size: 1.2rem;
             margin-bottom: 35px;
-            font-weight: 400; /* Slightly bolder for readability */
+            font-weight: 300;
             max-width: 700px;
             margin-left: auto;
             margin-right: auto;
             color: var(--text-color);
-            text-shadow: 0 2px 6px rgba(0,0,0,0.9); /* Enhanced shadow for readability */
         }
         .cta-button {
             background-image: linear-gradient(to right, var(--primary-color), var(--accent-color));
@@ -276,7 +276,7 @@
             text-align: center;
             color: var(--muted-text-color);
         }
-        .glass-card { /* Other cards still use glassmorphism */
+        .glass-card {
             background: var(--glass-bg);
             backdrop-filter: blur(var(--blur-intensity));
             -webkit-backdrop-filter: blur(var(--blur-intensity));
@@ -363,8 +363,8 @@
             color: var(--heading-color); 
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             margin-bottom: 20px;
-            font-size: 2rem; 
-            line-height: 1; 
+            font-size: 2rem; /* Adjusted for emoji size */
+            line-height: 1; /* Helps center emoji vertically in some cases */
         }
         .feature-icon-wrapper svg { 
             width: 32px; 
@@ -416,8 +416,8 @@
         .pricing-item { 
             text-align: center;
         }
-        .pricing-item .glass-card { 
-             width: 100%; 
+        .pricing-item .glass-card { /* To ensure pricing items also get hover effects if desired */
+             width: 100%; /* Make cards take full width of grid cell */
         }
         .pricing-icon-wrapper {
             display: inline-flex;
@@ -446,14 +446,14 @@
 
         .pricing-cta-section {
             text-align: center;
-            margin-top: 30px; 
+            margin-top: 30px; /* Reduced from 40px */
         }
         .pricing-cta-section .cta-button {
             margin-bottom: 25px;
-            background-image: linear-gradient(to right, var(--secondary-accent-color), var(--primary-color)); 
+            background-image: linear-gradient(to right, var(--secondary-accent-color), var(--primary-color)); /* Different gradient for this CTA */
         }
         .pricing-cta-section .cta-button:hover {
-            box-shadow: 0 10px 30px rgba(74, 222, 128, 0.55); 
+            box-shadow: 0 10px 30px rgba(74, 222, 128, 0.55); /* Greenish shadow on hover */
         }
         .contact-sales-text {
             font-size: 1rem;
@@ -506,7 +506,7 @@
             .section-subtitle { font-size: 1rem; margin-bottom: 40px; }
             .iframe-container { height: 500px; }
             .hero-content-box { padding: 40px 30px; }
-            .features-grid, .use-cases-grid, .pricing-grid { grid-template-columns: 1fr; } 
+            .features-grid, .use-cases-grid, .pricing-grid { grid-template-columns: 1fr; } /* Ensure pricing grid is also 1 column on mobile */
             nav a { font-size: 0.85rem; margin-left: 12px;}
             nav a.nav-button, nav a.nav-button-outline { padding: 7px 12px; font-size: 0.8rem;}
         }
@@ -522,13 +522,14 @@
             nav { flex-direction: column; }
             nav a { margin: 8px 0; width: 100%; text-align: center;}
             nav a.nav-button, nav a.nav-button-outline { width: auto; margin-left: 0;}
-            .feature-item, .use-case-item, .glass-card, .pricing-item .glass-card { padding: 25px 20px; } 
+            .feature-item, .use-case-item, .glass-card, .pricing-item .glass-card { padding: 25px 20px; } /* Apply to pricing items too */
             .pricing-item h3 { font-size: 1.2rem; }
             .pricing-icon-wrapper { width: 55px; height: 55px; font-size: 1.8rem; }
         }
     </style>
 </head>
 <body>
+    <!-- Header remains outside the hero for sticky positioning at the very top -->
     <header>
         <div class="container">
             <div class="logo">
@@ -555,6 +556,7 @@
 
     <main>
         <section class="hero">
+            <!-- Video is now the first child of the hero section -->
             <video autoplay muted loop playsinline id="hero-background-video">
                 <source src="theme_main.mp4" type="video/mp4">
                 Your browser does not support the video tag.
