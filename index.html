@@ -374,6 +374,10 @@
         .feature-icon-wrapper.predict-icon-bg {
             background-image: linear-gradient(135deg, var(--secondary-accent-color), var(--primary-color));
         }
+        .feature-icon-wrapper.api-icon-bg { /* For specific API icon background if needed */
+            background-image: linear-gradient(135deg, #555, #888); /* Example different gradient */
+        }
+
 
         .use-cases-section { /* Uses .section base */ }
         .use-cases-grid {
@@ -645,6 +649,24 @@
                         <h3>Improve Deliverability</h3>
                         <p>Reduce bounce rates and protect sender reputation. Essential for effective sign-up forms.</p>
                     </div>
+                    <div class="feature-item glass-card">
+                        <div class="feature-icon-wrapper">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"> <!-- Catch-all Icon -->
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+                            </svg>
+                        </div>
+                        <h3>Catch-all Detection</h3>
+                        <p>Identify risky catch-all email addresses to further refine your list quality and campaign targeting.</p>
+                    </div>
+                    <div class="feature-item glass-card">
+                        <div class="feature-icon-wrapper"> <!-- API Icon -->
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
+                            </svg>
+                        </div>
+                        <h3>Developer-Friendly API</h3>
+                        <p>Integrate robust verification and prediction into any application with our simple and powerful API.</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -703,6 +725,20 @@
                         <h3>Streamline Lead Generation</h3>
                         <p>Validate leads instantly and gather more context about them through name prediction for better follow-ups.</p>
                     </div>
+                    <div class="use-case-item glass-card">
+                        <svg class="use-case-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"> <!-- Fraud Reduction Icon -->
+                             <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 15l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
+                        </svg>
+                        <h3>Reduce Fraudulent Sign-ups</h3>
+                        <p>Prevent fake accounts and protect your platform by validating emails at the point of entry, minimizing risk.</p>
+                    </div>
+                    <div class="use-case-item glass-card">
+                        <svg class="use-case-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"> <!-- Data Hygiene Icon -->
+                            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/> <!-- Simple list/database rows icon -->
+                        </svg>
+                        <h3>Data Hygiene & Maintenance</h3>
+                        <p>Regularly cleanse your existing databases to remove invalid emails and maintain high data quality over time.</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -714,7 +750,7 @@
                 <div class="api-batch-content">
                     <div class="glass-card">
                         <h3>Powerful Async API Access</h3>
-                        <p>Seamlessly integrate our email verification and data prediction capabilities into your websites, CRMs, or custom applications with our well-documented Async REST API.</p>
+                        <p>Seamlessly integrate our AI email verification and data prediction capabilities into your websites, CRMs, or custom applications with our well-documented Async REST API.</p>
                         <a href="https://dataoorts.document360.io/docs/api-email-verification" class="cta-button" style="margin-top: 20px; padding: 12px 25px; font-size: 1rem;" target="_blank">View API Docs</a>
                     </div>
                     <div class="glass-card">
