@@ -299,7 +299,30 @@
             .section-subtitle { font-size: 0.9rem; }
             .logo { font-size: 1.3rem; text-align: center; width: 100%;} /* Center logo text */
             .logo svg { width: 28px; height: 28px; margin-right: 8px;}
-            nav { flex-direction: column; width: 100%;} /* Nav takes full width */
+            nav {
+                flex-direction: column;
+                width: 100%;
+                /* Added for scrollable nav to prevent header becoming too tall */
+                max-height: 250px; /* Adjust this value as needed e.g. 250px / 300px */
+                overflow-y: auto;
+                /* Styling for the nav scrollbar to match page */
+                scrollbar-width: thin; /* For Firefox */
+                scrollbar-color: var(--primary-color) rgba(15, 15, 35, 0.6); /* For Firefox */
+            }
+            nav::-webkit-scrollbar {
+                width: 8px;
+            }
+            nav::-webkit-scrollbar-track {
+                background: rgba(15, 15, 35, 0.6); /* Match body scrollbar track */
+            }
+            nav::-webkit-scrollbar-thumb {
+                background: var(--primary-color); /* Match body scrollbar thumb */
+                border-radius: 10px;
+            }
+            nav::-webkit-scrollbar-thumb:hover {
+                background: var(--primary-hover-color); /* Match body scrollbar thumb hover */
+            }
+
             nav a { margin: 8px 0; width: 100%; text-align: center;} /* Links take full width, text centered */
             nav a.nav-button, nav a.nav-button-outline { width: auto; margin-left: auto; margin-right: auto; display: inline-block;} /* Center buttons by making them auto width and using auto margins */
             .feature-item, .use-case-item, .glass-card, .pricing-item .glass-card { padding: 25px 20px; }
@@ -374,9 +397,14 @@
                         <p>Our AI model intelligently predicts the name of the email holder, enriching your contact data.</p>
                     </div>
                     <div class="feature-item glass-card">
-                        <div class="feature-icon-wrapper">⚡</div>
+                        <div class="feature-icon-wrapper">
+                            <!-- Changed Emoji to SVG Icon -->
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+                                <path d="M11 21L11 14L6 14L13 3L13 10L18 10L11 21Z"/>
+                            </svg>
+                        </div>
                         <h3>Instant Results</h3>
-                        <p>Get verification and prediction status in seconds. Single and batch processing available.</p>
+                        <p>Get verification and prediction status in seconds. Single and batch async processing.</p>
                     </div>
                     <div class="feature-item glass-card">
                         <div class="feature-icon-wrapper">
