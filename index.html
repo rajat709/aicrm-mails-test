@@ -11,21 +11,32 @@
             --primary-color: #00aaff;
             --primary-hover-color: #0088cc;
             --accent-color: #ff3d71;
-            --secondary-accent-color: #4ade80; /* Green for success/prediction */
+            --secondary-accent-color: #4ade80;
 
-            /* Updated glow gradient for a more blue, subtle, and focused feel */
+            /* Base HTML background color */
+            --html-bg-color: #0A0C12; /* Very dark, slightly desaturated blue */
+
+            /* Glow Gradient Variables (subtle and widespread) */
+            --glow-center-color: rgba(60, 80, 140, 0.1);  /* Subtle blue core of the glow */
+            --glow-mid-color:    rgba(40, 55, 100, 0.06); /* Fainter transition for the glow */
+            --glow-edge-color:   rgba(15, 20, 40, 0);     /* Fully transparent edge */
+
             --glow-gradient: linear-gradient(
-                120deg,
-                rgba(10, 12, 25, 0) 0%,       /* Dark transparent blue */
-                rgba(50, 80, 170, 0.15) 30%,  /* Subtle blue glow */
-                rgba(60, 90, 180, 0.1) 50%,   /* Slightly brighter blue center of glow */
-                rgba(50, 80, 170, 0.15) 70%,  /* Subtle blue glow */
-                rgba(10, 12, 25, 0) 100%      /* Dark transparent blue */
+                145deg, /* Angle can be adjusted for desired sweep */
+                var(--glow-edge-color) 0%,
+                var(--glow-mid-color) 35%,
+                var(--glow-center-color) 50%,
+                var(--glow-mid-color) 65%,
+                var(--glow-edge-color) 100%
             );
 
-            /* Grid pattern variables */
-            --grid-line-color: rgba(50, 58, 80, 0.15); /* Subtle dark blue-grey for grid lines */
-            --grid-size: 45px;                       /* Size of the grid cells */
+            /* Grid Pattern Variables */
+            --small-grid-size: 20px;
+            --small-grid-line-color: rgba(60, 70, 100, 0.07); /* Very subtle lines for the fine grid */
+
+            --large-grid-size: calc(var(--small-grid-size) * 5); /* e.g., 100px */
+            --large-grid-line-color: rgba(75, 85, 115, 0.1);   /* Slightly more prominent for larger blocks */
+
 
             --section-overlay-pattern: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%233a3f70' fill-opacity='0.06' fill-rule='evenodd'%3E%3Cpath d='M20 10c0 .958-.014 1.903-.043 2.833L10 20 0 10c0-.958.014-1.903.043-2.833L10 0l10 10zM7.167 10l-5-5L0 10l2.167 5 5-5zm5.666 0l-5-5-2.167 5 2.167 5 5-5z'/%3E%3C/g%3E%3C/svg%3E");
 
@@ -51,10 +62,10 @@
 
         html {
             scroll-behavior: smooth;
-            background-color: #06080F; /* Very dark desaturated blue base */
+            background-color: var(--html-bg-color);
             background-image: var(--glow-gradient);
-            background-size: 300% 300%;
-            animation: glowingRootBackground 22s ease-in-out infinite alternate;
+            background-size: 300% 300%; /* Controls the scale of the gradient for animation */
+            animation: glowingRootBackground 25s ease-in-out infinite alternate; /* Slightly slower animation */
         }
 
         @keyframes glowingRootBackground {
@@ -64,13 +75,20 @@
 
         body {
             font-family: var(--font-family);
-            /* Make body background transparent to show HTML's gradient */
-            background-color: transparent;
-            /* Apply the grid pattern */
+            background-color: transparent; /* Show HTML's gradient */
+            /* Layered grid: Small grid drawn first, then large grid on top */
             background-image:
-                linear-gradient(to right, var(--grid-line-color) 1px, transparent 1px),
-                linear-gradient(to bottom, var(--grid-line-color) 1px, transparent 1px);
-            background-size: var(--grid-size) var(--grid-size);
+                /* Small Grid */
+                linear-gradient(to right, var(--small-grid-line-color) 1px, transparent 1px),
+                linear-gradient(to bottom, var(--small-grid-line-color) 1px, transparent 1px),
+                /* Large Grid */
+                linear-gradient(to right, var(--large-grid-line-color) 1px, transparent 1px),
+                linear-gradient(to bottom, var(--large-grid-line-color) 1px, transparent 1px);
+            background-size:
+                var(--small-grid-size) var(--small-grid-size),  /* Size for small vertical lines */
+                var(--small-grid-size) var(--small-grid-size),  /* Size for small horizontal lines */
+                var(--large-grid-size) var(--large-grid-size),  /* Size for large vertical lines */
+                var(--large-grid-size) var(--large-grid-size);  /* Size for large horizontal lines */
             background-attachment: fixed;
             background-position: center;
             color: var(--text-color);
@@ -148,7 +166,6 @@
         nav a.nav-button::after, nav a.nav-button-outline::after { display: none; }
 
         .hero { padding: 100px 0 120px 0; text-align: center; position: relative; overflow: hidden; }
-        /* Removed #hero-background-video styles as the video is removed */
         .hero-content-box { background: rgba(25, 30, 65, 0.75); backdrop-filter: blur(calc(var(--blur-intensity) * 0.7)); -webkit-backdrop-filter: blur(calc(var(--blur-intensity) * 0.7)); padding: 50px 40px; border-radius: var(--card-border-radius); box-shadow: 0 10px 35px rgba(0,0,0,0.4); border: 1px solid var(--glass-border-color); max-width: 850px; margin: 0 auto; position: relative; z-index: 1; }
         .hero h1 { font-size: 3rem; margin-bottom: 20px; font-weight: 700; line-height: 1.25; text-shadow: 0 2px 6px rgba(0,0,0,0.3); color: var(--heading-color); }
         .hero h1 .highlight { color: var(--secondary-accent-color); }
@@ -432,7 +449,6 @@
 
     <main>
         <section class="hero">
-            <!-- Video removed from here -->
             <div class="container">
                 <div class="hero-content-box">
                     <h1>Verify Emails & Predict <span class="highlight">Linked Data</span> Instantly with AI</h1>
