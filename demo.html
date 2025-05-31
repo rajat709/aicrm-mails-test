@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Email Verifier and Predictor - Live Demo</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%2300aaff%22><path d=%22M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-8 6.5L4 6h16l-8 4.5zM4 18V8l8 5 8-5v10H4z%22/></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%2300aaff%22><path d=%22M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-8 6.5L4 6h16l-8 4.5zM4 18V8l8 5 8-5v10H4z%22/></svg%3E">
     <style>
         :root {
             --primary-color: #00aaff;
@@ -15,8 +15,7 @@
             --text-color: #e0e0f0;
             --heading-color: #ffffff;
             --muted-text-color: #a0a0c0;
-            --bg-dark: #0a0a18;
-            --bg-medium: #1a1a2e;
+            /* Removed --bg-dark and --bg-medium as html and body will handle overall background */
 
             --glass-bg: rgba(40, 45, 80, 0.7);
             --glass-border-color: rgba(255, 255, 255, 0.12);
@@ -26,14 +25,31 @@
             --font-family: 'Poppins', sans-serif;
             --transition-speed: 0.3s;
 
-            --glow-gradient: linear-gradient(
-                135deg,
-                rgba(10, 10, 24, 0.1) 0%,
-                rgba(0, 170, 255, 0.2) 25%,
-                rgba(255, 61, 113, 0.15) 50%,
-                rgba(74, 222, 128, 0.15) 75%,
-                rgba(10, 10, 24, 0.1) 100%
+            /* ---- New Background Variables from previous example ---- */
+            /* Base HTML background color */
+            --html-bg-color: #0A0C12; /* Very dark, slightly desaturated blue */
+
+            /* Glow Gradient Variables (subtle and widespread for HTML) */
+            --glow-center-color: rgba(60, 80, 140, 0.1);  /* Subtle blue core of the glow */
+            --glow-mid-color:    rgba(40, 55, 100, 0.06); /* Fainter transition for the glow */
+            --glow-edge-color:   rgba(15, 20, 40, 0);     /* Fully transparent edge */
+
+            --html-glow-gradient: linear-gradient( /* Renamed to avoid conflict if an old one was used elsewhere */
+                145deg,
+                var(--glow-edge-color) 0%,
+                var(--glow-mid-color) 35%,
+                var(--glow-center-color) 50%,
+                var(--glow-mid-color) 65%,
+                var(--glow-edge-color) 100%
             );
+
+            /* Grid Pattern Variables for BODY */
+            --small-grid-size: 20px;
+            --small-grid-line-color: rgba(60, 70, 100, 0.07);
+
+            --large-grid-size: calc(var(--small-grid-size) * 5); /* e.g., 100px */
+            --large-grid-line-color: rgba(75, 85, 115, 0.1);
+            /* ---- End of New Background Variables ---- */
         }
 
         * {
@@ -44,24 +60,41 @@
 
         html {
             scroll-behavior: smooth;
+            /* Apply the new subtle glow background to HTML */
+            background-color: var(--html-bg-color);
+            background-image: var(--html-glow-gradient);
+            background-size: 300% 300%;
+            animation: glowingRootBackground 25s ease-in-out infinite alternate;
+        }
+
+        @keyframes glowingRootBackground { /* Renamed from glowingBodyBackground */
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
         }
 
         body {
             font-family: var(--font-family);
-            background-color: var(--bg-dark);
+            /* Body background is transparent to show HTML's glow */
+            background-color: transparent;
+            /* Apply the layered grid pattern to BODY */
+            background-image:
+                linear-gradient(to right, var(--small-grid-line-color) 1px, transparent 1px),
+                linear-gradient(to bottom, var(--small-grid-line-color) 1px, transparent 1px),
+                linear-gradient(to right, var(--large-grid-line-color) 1px, transparent 1px),
+                linear-gradient(to bottom, var(--large-grid-line-color) 1px, transparent 1px);
+            background-size:
+                var(--small-grid-size) var(--small-grid-size),
+                var(--small-grid-size) var(--small-grid-size),
+                var(--large-grid-size) var(--large-grid-size),
+                var(--large-grid-size) var(--large-grid-size);
+            background-attachment: fixed; /* Important for the grid to stay put */
+            background-position: center;  /* Center the grid */
+
             color: var(--text-color);
             line-height: 1.7;
             font-size: 16px;
             overflow-x: hidden;
-            background-image: var(--glow-gradient);
-            background-size: 400% 400%;
-            animation: glowingBodyBackground 25s ease-in-out infinite alternate;
             padding-bottom: 50px; /* Space for footer */
-        }
-
-        @keyframes glowingBodyBackground {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 100% 50%; }
         }
 
         .container {
@@ -76,8 +109,10 @@
             text-align: center;
             border-bottom: 1px solid var(--glass-border-color);
             margin-bottom: 40px;
-            background: rgba(26, 26, 46, 0.5); /* Slightly darker than glass */
+            background: rgba(26, 26, 46, 0.5);
             backdrop-filter: blur(5px);
+            position: relative; /* Ensure header is above the body grid */
+            z-index: 10;
         }
 
         .logo-main {
@@ -98,6 +133,8 @@
 
         .main-content {
             text-align: center;
+            position: relative; /* Ensure content is above the body grid */
+            z-index: 5;
         }
 
         .main-content h1 {
@@ -109,7 +146,7 @@
         }
         .main-content h1 .highlight {
             color: var(--secondary-accent-color);
-            display: block; /* Make "Live Demo" on a new line for emphasis */
+            display: block;
             margin-top: 5px;
         }
         .main-content .subtitle {
@@ -141,12 +178,12 @@
             border: 1px solid var(--glass-border-color);
             max-width: 900px;
             margin: 0 auto 40px auto;
-            overflow: hidden; /* Ensures iframe respects border radius */
+            overflow: hidden;
         }
         .iframe-container {
             width: 100%;
-            height: 800px; /* Default height */
-            border-radius: 10px; /* Inner radius for iframe */
+            height: 800px;
+            border-radius: 10px;
             overflow: hidden;
             position: relative;
         }
@@ -225,7 +262,8 @@
             color: var(--muted-text-color);
             border-top: 1px solid var(--glass-border-color);
             background: rgba(10, 10, 24, 0.7);
-            position: relative; /* Keep it at the bottom of content flow */
+            position: relative;
+            z-index: 10; /* Ensure footer is above the body grid */
             margin-top: 60px;
         }
         footer a {
@@ -253,7 +291,7 @@
             }
             .action-btn {
                 width: 100%;
-                max-width: 300px; /* Limit width on small screens when stacked */
+                max-width: 300px;
             }
             .logo-main {
                 font-size: 1.6rem;
