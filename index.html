@@ -13,7 +13,20 @@
             --accent-color: #ff3d71;
             --secondary-accent-color: #4ade80; /* Green for success/prediction */
 
-            --body-bg-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cg fill='%232a2f57' fill-opacity='0.04'%3E%3Ccircle cx='2' cy='2' r='1'/%3E%3Ccircle cx='7' cy='7' r='1'/%3E%3C/g%3E%3C/svg%3E");
+            /* Updated glow gradient for a more blue, subtle, and focused feel */
+            --glow-gradient: linear-gradient(
+                120deg,
+                rgba(10, 12, 25, 0) 0%,       /* Dark transparent blue */
+                rgba(50, 80, 170, 0.15) 30%,  /* Subtle blue glow */
+                rgba(60, 90, 180, 0.1) 50%,   /* Slightly brighter blue center of glow */
+                rgba(50, 80, 170, 0.15) 70%,  /* Subtle blue glow */
+                rgba(10, 12, 25, 0) 100%      /* Dark transparent blue */
+            );
+
+            /* Grid pattern variables */
+            --grid-line-color: rgba(50, 58, 80, 0.15); /* Subtle dark blue-grey for grid lines */
+            --grid-size: 45px;                       /* Size of the grid cells */
+
             --section-overlay-pattern: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%233a3f70' fill-opacity='0.06' fill-rule='evenodd'%3E%3Cpath d='M20 10c0 .958-.014 1.903-.043 2.833L10 20 0 10c0-.958.014-1.903.043-2.833L10 0l10 10zM7.167 10l-5-5L0 10l2.167 5 5-5zm5.666 0l-5-5-2.167 5 2.167 5 5-5z'/%3E%3C/g%3E%3C/svg%3E");
 
             --text-color: #e0e0f0;
@@ -28,16 +41,6 @@
 
             --font-family: 'Poppins', sans-serif;
             --transition-speed: 0.3s;
-
-            --glow-gradient: linear-gradient(
-                120deg,
-                rgba(10, 10, 24, 0) 0%,
-                rgba(0, 170, 255, 0.15) 20%,
-                rgba(255, 61, 113, 0.10) 45%,
-                rgba(74, 222, 128, 0.10) 65%,
-                rgba(0, 170, 255, 0.15) 80%,
-                rgba(10, 10, 24, 0) 100%
-            );
         }
 
         * {
@@ -48,7 +51,7 @@
 
         html {
             scroll-behavior: smooth;
-            background-color: #0a0a18;
+            background-color: #06080F; /* Very dark desaturated blue base */
             background-image: var(--glow-gradient);
             background-size: 300% 300%;
             animation: glowingRootBackground 22s ease-in-out infinite alternate;
@@ -61,10 +64,14 @@
 
         body {
             font-family: var(--font-family);
-            background-color: rgba(15, 15, 35, 0.9);
-            background-image: var(--body-bg-pattern);
+            /* Make body background transparent to show HTML's gradient */
+            background-color: transparent;
+            /* Apply the grid pattern */
+            background-image:
+                linear-gradient(to right, var(--grid-line-color) 1px, transparent 1px),
+                linear-gradient(to bottom, var(--grid-line-color) 1px, transparent 1px);
+            background-size: var(--grid-size) var(--grid-size);
             background-attachment: fixed;
-            background-size: auto;
             background-position: center;
             color: var(--text-color);
             line-height: 1.7;
@@ -96,18 +103,18 @@
             border-bottom: 1px solid var(--glass-border-color);
         }
         header .container { display: flex; justify-content: space-between; align-items: center; }
-        .header-main { display: flex; justify-content: space-between; align-items: center; width: 100%; } /* For desktop, logo and nav are siblings; for mobile, logo and toggle are in header-main */
+        .header-main { display: flex; justify-content: space-between; align-items: center; width: 100%; }
 
         .logo { display: flex; align-items: center; font-size: 1.5rem; font-weight: 700; color: var(--heading-color); letter-spacing: 0.5px; }
         .logo svg { width: 32px; height: 32px; margin-right: 10px; fill: var(--primary-color); }
 
         .mobile-nav-toggle {
-            display: none; /* Hidden by default, shown on mobile */
+            display: none;
             background: transparent;
             border: none;
             cursor: pointer;
             padding: 10px;
-            z-index: 1002; /* Above nav if it were to overlap somehow */
+            z-index: 1002;
         }
         .mobile-nav-toggle .icon-bar {
             display: block;
@@ -141,7 +148,7 @@
         nav a.nav-button::after, nav a.nav-button-outline::after { display: none; }
 
         .hero { padding: 100px 0 120px 0; text-align: center; position: relative; overflow: hidden; }
-        #hero-background-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; }
+        /* Removed #hero-background-video styles as the video is removed */
         .hero-content-box { background: rgba(25, 30, 65, 0.75); backdrop-filter: blur(calc(var(--blur-intensity) * 0.7)); -webkit-backdrop-filter: blur(calc(var(--blur-intensity) * 0.7)); padding: 50px 40px; border-radius: var(--card-border-radius); box-shadow: 0 10px 35px rgba(0,0,0,0.4); border: 1px solid var(--glass-border-color); max-width: 850px; margin: 0 auto; position: relative; z-index: 1; }
         .hero h1 { font-size: 3rem; margin-bottom: 20px; font-weight: 700; line-height: 1.25; text-shadow: 0 2px 6px rgba(0,0,0,0.3); color: var(--heading-color); }
         .hero h1 .highlight { color: var(--secondary-accent-color); }
@@ -291,62 +298,61 @@
         /* --- Mobile Header Styles --- */
         @media (max-width: 1024px) {
             header .container {
-                flex-direction: column; /* Container stacks header-main and nav */
+                flex-direction: column;
                 align-items: center;
             }
             .header-main {
-                display: flex; /* Logo and Toggle side-by-side */
+                display: flex;
                 justify-content: space-between;
                 align-items: center;
                 width: 100%;
-                /* margin-bottom: 15px; /* Space between logo/toggle row and nav if nav is open directly below */
             }
             .logo {
-                margin-bottom: 0; /* Remove bottom margin if any from wider screens */
-                font-size: 1.4rem; /* Slightly smaller logo for mobile */
+                margin-bottom: 0;
+                font-size: 1.4rem;
             }
             .logo svg {
                 width: 28px; height: 28px;
             }
 
             .mobile-nav-toggle {
-                display: block; /* Show hamburger */
+                display: block;
             }
 
             nav#main-navigation {
                 width: 100%;
                 flex-direction: column;
                 align-items: center;
-                max-height: 0; /* Collapsed by default */
+                max-height: 0;
                 overflow: hidden;
                 transition: max-height 0.35s ease-in-out;
-                background: var(--glass-bg); /* Give a background if it overlays content */
-                margin-top: 0; /* Will be added when active */
-                border-top: 1px solid var(--glass-border-color); /* Optional: separator line when open */
-                padding-top: 10px; /* Space inside nav when open */
-                padding-bottom: 10px; /* Space inside nav when open */
+                background: var(--glass-bg);
+                margin-top: 0;
+                border-top: 1px solid var(--glass-border-color);
+                padding-top: 10px;
+                padding-bottom: 10px;
             }
             nav#main-navigation.nav-active {
-                max-height: 60vh; /* Expand to show links, scrollable if content overflows */
+                max-height: 60vh;
                 overflow-y: auto;
-                margin-top: 15px; /* Space below the logo/toggle bar */
+                margin-top: 15px;
             }
             nav#main-navigation a {
-                margin: 10px 0; /* Stack links vertically */
+                margin: 10px 0;
                 font-size: 1rem;
-                width: 90%; /* Make tappable area wider */
+                width: 90%;
                 text-align: center;
                 padding: 10px 0;
             }
-            nav#main-navigation a::after { /* Adjust hover underline for centered text */
+            nav#main-navigation a::after {
                 left: 50%;
                 transform: translateX(-50%);
             }
             nav#main-navigation a.nav-button,
             nav#main-navigation a.nav-button-outline {
-                margin: 10px auto; /* Center buttons */
-                width: auto; /* Allow buttons to size to content */
-                display: inline-block; /* Needed for auto margins to center */
+                margin: 10px auto;
+                width: auto;
+                display: inline-block;
                 padding: 10px 20px;
             }
         }
@@ -363,10 +369,6 @@
             .hero-content-box { padding: 40px 30px; }
             .features-grid, .use-cases-grid, .pricing-grid { grid-template-columns: 1fr; }
 
-            /* Nav link adjustments for 768px already handled by 1024px hamburger menu.
-               Further specific adjustments for nav a if needed can go here. */
-            /* nav a { font-size: 0.85rem; margin-left: 12px;} */
-            /* nav a.nav-button, nav a.nav-button-outline { padding: 7px 12px; font-size: 0.8rem; margin-left: 10px; margin-right: 10px;} */
 
             .footer-status {
                 position: static;
@@ -386,11 +388,9 @@
             .section-title { font-size: 2rem; }
             .section-subtitle { font-size: 0.9rem; }
 
-            .logo { font-size: 1.3rem; } /* Further adjustments if needed */
+            .logo { font-size: 1.3rem; }
             .logo svg { width: 26px; height: 26px; }
 
-            /* Hamburger menu from 1024px handles nav layout.
-               No need for previous nav specific styling like max-height and overflow here. */
 
             .feature-item, .use-case-item, .glass-card, .pricing-item .glass-card { padding: 25px 20px; }
             .pricing-item h3 { font-size: 1.2rem; }
@@ -432,10 +432,7 @@
 
     <main>
         <section class="hero">
-            <video autoplay muted loop playsinline id="hero-background-video">
-                <source src="theme_main.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
+            <!-- Video removed from here -->
             <div class="container">
                 <div class="hero-content-box">
                     <h1>Verify Emails & Predict <span class="highlight">Linked Data</span> Instantly with AI</h1>
@@ -661,12 +658,6 @@
                 navToggle.setAttribute('aria-expanded', !isExpanded);
                 mainNav.classList.toggle('nav-active');
                 navToggle.classList.toggle('is-active');
-                // Optional: Prevent body scroll when menu is open and takes full height
-                // if (mainNav.classList.contains('nav-active')) {
-                //    document.body.style.overflow = 'hidden';
-                // } else {
-                //    document.body.style.overflow = '';
-                // }
             });
         }
     </script>
